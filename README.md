@@ -4,4 +4,6 @@ These are my personal Linux configuration files, such as NeoVim, terminals, etc.
 
 ### Current Configurations
 
-- NeoVim as `nvim`
+- `nvim`
+- `starhip`
+- `zsh`

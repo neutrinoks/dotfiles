@@ -1,0 +1,7 @@
+#! /usr/bin/zsh
+
+export XCURSOR_SIZE=15
+export HYPRCURSOR_SIZE=15
+
+export LIBVA_DRIVER_NAME=nvidia
+export __GLX_VENDOR_LIBRARY_NAME=nvidia

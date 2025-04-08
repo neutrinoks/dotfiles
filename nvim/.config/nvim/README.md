@@ -34,6 +34,7 @@ after getting totally inspired by typecraft and its [video series](https://www.y
 - **Nerd Fonts** are required for nice display of icons (currently Cousine Nerd Font is configured,
   which is packed into this directory)
 - Because **telescope** is included in this configuration, `ripgrep` package is required.
+- `nodejs` seems still to be required (not sure, probably mason).
 
 ### Installation
 

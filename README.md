@@ -5,6 +5,10 @@ These are my personal Linux configuration files, such as NeoVim, terminals, etc.
 ### Current Configurations
 
 - `hypr`
+- `kitty`
 - `nvim`
 - `starhip`
+- `uwsm`
+- `walker`
+- `waybar`
 - `zsh`

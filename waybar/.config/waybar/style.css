@@ -3,6 +3,7 @@
 
 * {
     color: @text;
+    font-weight: bold;
 }
 
 window#waybar {
@@ -11,7 +12,6 @@ window#waybar {
 
 #workspaces button {
     background-color: @surface2;
-    font-weight: bold;
     padding: 0 .25em;
     margin: .25em;
 }
@@ -20,17 +20,25 @@ window#waybar {
     background-color: @blue;
 }
 
-#cpu, #load, #memory, #clock, #network, #battery, #backlight, #pulseaudio, #language, #temperature {
-    background-color: alpha(@surface2, 0.3);
+#cpu, #load, #memory, #clock, #network, #battery, #backlight,
+#pulseaudio, #language, #temperature, #power-profiles-daemon {
+    background-color: alpha(@surface2, 0.75);
     border-radius: 10px;
     padding: .1em .25em .1em .5em;
     margin: .25em;
 }
 
-#language {
-    border-radius: 10px;
+#language, #power-profiles-daemon {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+#power-profiles-daemon.performance {
+    color: @red;
+}
+
+#power-profiles-daemon.power-saver {
+    color: @green;
 }
 
 #custom-power {

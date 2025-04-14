@@ -1,16 +1,14 @@
 // -*- mode: jsonc -*-
 {
-    "height": 30, // Waybar height (to be removed for auto height)
+    "height": 35, // Waybar height (to be removed for auto height)
     "spacing": 0, // Gaps between modules
 
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces"
-        // "hyprland/submap"
     ],
     "modules-center": [
         "cpu",
-        "load",
         "memory",
         "temperature",
         "clock",
@@ -35,19 +33,25 @@
         "format-ka":            "KA",
     },
     "hyprland/workspaces": {
-        "disable-scroll":       true,
-        "all-outputs":          true,
-        "warp-on-scroll":       false,
-        "format":               "{name}",
-    },
-    "hyprland/submap": {
-        "format":               "<span style=\"italic\">{}</span>"
+        "format":                   "{windows}",
+        "window-rewrite-default":   "\uf17c",
+        "window-rewrite": {
+            "brave":                "\ue745",
+            "firefox":              "\ue745",
+            "kitty":                "\uf120",
+            "lutris":               "\udb80\ude97",
+            "title<nvim>":          "\ue6ae",
+            "class<thunderbird>":   "\udb80\uddf0",
+            "slack":                "\ue8a4",
+            "telegram":             "\uf2c6",
+            "signal":               "\uf25f",
+        },
     },
     "tray": {
         "spacing":              5,
     },
     "clock": {
-        "format":               "{:%d. %b %H:%M}  ",
+        "format":               "{:%d. %b %H:%M} \uf017 ",
         "tooltip-format":       "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode":             "year",
@@ -71,18 +75,15 @@
         }
     },
     "cpu": {
-        "format":               "{usage}%  ",
-    },
-    "load": {
-        "format":               "{}%",
+        "format":               "{usage}% \uf2db ",
     },
     "memory": {
-        "format":               "{}%  "
+        "format":               "{}% \uefc5 "
     },
     "temperature": {
         "critical-threshold":   80,
-        "format":               "{temperatureC}°C {icon}",
-        "format-icons":         [" ", "", " "]
+        "format":               "{temperatureC}°C {icon} ",
+        "format-icons":         ["\uf2cb", "\uf2c9", "\uef2a"]
     },
     "backlight": {
         "format":               "{percent}% {icon}",
@@ -95,35 +96,35 @@
             "warning":          30,
             "critical":         15
         },
-        "format":               "{capacity}% {icon}",
-        "format-charging":      "{capacity}% ",
-        "format-plugged":       "{capacity}% ",
-        "format-icons":         ["󰁺", "󰁼", "󰂁", "󰁹"]
+        "format":               "{capacity}% {icon} ",
+        "format-charging":      "{capacity}% \ueea1 ",
+        "format-plugged":       "{capacity}% \ueea1 ",
+        "format-icons":         ["\udb80\udc7a", "\udb80\udc7c", "\udb80\udc81", "\udb80\udc79"]
     },
     "power-profiles-daemon": {
         "format-icons": {
-            "performance":      " ",
-            "balanced":         " ",
-            "power-saver":      " "
+            "performance":      "\uf0e7",
+            "balanced":         "\udb81\uddd1",
+            "power-saver":      "\udb80\udf2a"
         }
     },
     "network": {
-        "format-wifi":          "{essid} ({signalStrength}%)  ",
-        "format-ethernet":      "{ipaddr}/{cidr}  ",
-        "format-linked":        "{ifname} (No IP)  ",
-        "format-disconnected":  "⚠ ",
+        "format-wifi":          "{essid} ({signalStrength}%) \uf1eb ",
+        "format-ethernet":      "{ipaddr}/{cidr} \uef09 ",
+        "format-linked":        "{ifname} (No IP) \uef09 ",
+        "format-disconnected":  "\uea6c ",
     },
     "pulseaudio": {
-        "format":               "{volume}%    {format_source}",
+        "format":               "{volume}% \uf028  {format_source}",
         "format-bluetooth":     "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted":         "  {format_source}",
-        "format-source":        "{volume}% ",
-        "format-source-muted":  " ",
+        "format-muted":         "\ueee8 {format_source}",
+        "format-source":        "{volume}% \uf130 ",
+        "format-source-muted":  "\uf131 ",
         "on-click":             "pavucontrol"
     },
     "custom/power": {
-        "format" :              " ",
+        "format" :              "\udb81\udc25 ",
 		"tooltip":              false,
 		"menu":                 "on-click",
 		"menu-file":            "$HOME/.config/waybar/power_menu.xml",

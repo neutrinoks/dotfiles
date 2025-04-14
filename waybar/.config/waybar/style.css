@@ -1,9 +1,8 @@
-/* Import Catppuccin-Frappe colorscheme */
+/* Import modified Catppuccin-Frappe colorscheme */
 @import "frappe.css";
 
 * {
-    color: @text;
-    font-weight: bold;
+    font-family: "Hack Nerd Font";
 }
 
 window#waybar {
@@ -11,17 +10,20 @@ window#waybar {
 }
 
 #workspaces button {
+    color: @white;
     background-color: @surface2;
-    padding: 0 .25em;
-    margin: .25em;
+    padding: 0 .45em 0 .2em;
+    margin: .2em;
+    font-size: 20px;
 }
 
 #workspaces button.active {
-    background-color: @blue;
+    color: @green;
 }
 
 #cpu, #load, #memory, #clock, #network, #battery, #backlight,
-#pulseaudio, #language, #temperature, #power-profiles-daemon {
+#pulseaudio, #language, #temperature, #power-profiles-daemon, #tray {
+    color: @white;
     background-color: alpha(@surface2, 0.75);
     border-radius: 10px;
     padding: .1em .25em .1em .5em;

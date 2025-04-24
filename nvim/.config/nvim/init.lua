@@ -63,8 +63,8 @@ vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, opts)
 
 vim.keymap.set({'n','i'}, '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
 vim.keymap.set({'n','i'}, '<A-.>', '<Cmd>BufferNext<CR>', opts)
-vim.keymap.set('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
-vim.keymap.set('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+vim.keymap.set('n', '<A-S-,>', '<Cmd>BufferMovePrevious<CR>', opts)
+vim.keymap.set('n', '<A-S-.>', '<Cmd>BufferMoveNext<CR>', opts)
 vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
 
 -- Gitsigns ----------------------------------------------------------------------------------------

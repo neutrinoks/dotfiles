@@ -16,7 +16,7 @@ return {
                     "lua_ls",
                     "phpactor",
                     "pyright",
-                    "rust_analyzer"
+                    -- "rust_analyzer"
                 }
             })
         end
@@ -33,7 +33,7 @@ return {
             lspconfig.lua_ls.setup({ capabilities = capabilities })
             lspconfig.phpactor.setup({ capabilities = capabilities })
             lspconfig.pyright.setup({ capabilities = capabilities })
-            lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+            -- lspconfig.rust_analyzer.setup({ capabilities = capabilities })
         end
     }
 }

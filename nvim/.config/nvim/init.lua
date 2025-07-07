@@ -70,3 +70,8 @@ vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
 -- Gitsigns ----------------------------------------------------------------------------------------
 
 vim.keymap.set("n", "<leader>gd", ":Gitsigns preview_hunk<CR>", opts)
+
+
+-- GitHub-Copilot ----------------------------------------------------------------------------------
+
+vim.keymap.set("i", "<leader>cp", "<Cmd>CopilotSuggester<CR>", opts)

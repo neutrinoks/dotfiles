@@ -57,6 +57,7 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, opts)
+vim.keymap.set("n", "<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
 
 
 -- Barbar ------------------------------------------------------------------------------------------

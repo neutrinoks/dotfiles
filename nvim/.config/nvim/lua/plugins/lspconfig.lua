@@ -16,7 +16,8 @@ return {
                     "lua_ls",
                     "phpactor",
                     "pyright",
-                    -- "rust_analyzer"
+                    "rust_analyzer",
+                    "vtsls"
                 }
             })
         end

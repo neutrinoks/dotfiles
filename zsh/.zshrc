@@ -19,6 +19,7 @@ fi
 alias la="ls -la --color=auto"
 alias ll="ls -l --color=auto"
 alias locrs="find . -name '*.rs' | xargs wc -l | tail -n1"
+alias gitupdate="git reset --hard $(git log -n 2 --pretty=format:"%H" | tail -1) && git pull"
 
 eval "$(ssh-agent -s)" &> /dev/null
 

@@ -1,78 +1,201 @@
 # NeoVim Configuration
 
-This is my personal NeoVim configuration. It was completely refactored on March the 14th, 2025,
-after getting totally inspired by typecraft and its [video series](https://www.youtube.com/playlist?list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn).
+My personal NeoVim configuration, built on [lazy.nvim](https://github.com/folke/lazy.nvim) and
+inspired by typecraft's [video series](https://www.youtube.com/playlist?list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn).
 
-### Current Plugin Setup
+## Plugins
 
-- Upper tab bar:
-  `romgrk/barbar`
-- Lower status bar:
-  `nvim-lualine/lualine`
-- File navigator:
-  `nvim-neo-tree/neo-tree`
-- Color schemes:
-  `catppuccin/nvim`
-- Tree sitter:
-  `nvim-treesitter/nvim-treesitter`
-- Auto completion and snippets: 
-  `hrsh7th/cmp-nvim-lsp`, `L3MON4D3/LuaSnip`, `rafamadriz/friendly-snippets`, and `hrsh7th/nvim-cmp`
-- LSP installtion & configuration:
-  `williamboman/mason`, `williamboman/mason-lspconfig`, and `neovim/nvim-lspconfig`
-- Formatting, linting:
-  `nvimtools/none-ls`
-- Fuzzy finding:
-  `nvim-telescope/telescope`
-- Git assistance:
-  `lewis6991/gitsigns.nvim`
+| Category | Plugin(s) |
+|----------|-----------|
+| Tab bar | `romgrk/barbar.nvim` |
+| Status bar | `nvim-lualine/lualine.nvim` |
+| File explorer | `nvim-neo-tree/neo-tree.nvim` |
+| Color scheme | `catppuccin/nvim` |
+| Syntax / AST | `nvim-treesitter/nvim-treesitter` |
+| Completion & snippets | `hrsh7th/nvim-cmp`, `L3MON4D3/LuaSnip`, `rafamadriz/friendly-snippets` |
+| LSP | `neovim/nvim-lspconfig`, `williamboman/mason.nvim`, `williamboman/mason-lspconfig.nvim` |
+| Formatting & linting | `nvimtools/none-ls.nvim` |
+| Fuzzy finding | `nvim-telescope/telescope.nvim` |
+| Diagnostics | `folke/trouble.nvim` |
+| Git signs | `lewis6991/gitsigns.nvim` |
+| Git conflicts | `akinsho/git-conflict.nvim` |
+| Dark/light mode | `f-person/auto-dark-mode.nvim` |
+| Auto pairs | `windwp/nvim-autopairs` |
+| Keymap hints | `folke/which-key.nvim` |
+| AI assistant | `greggh/claude-code.nvim` |
 
-### Requirements
+### LSP Servers
 
-**Requirements need to be verified again, after refactoring it completely**
+Installed and managed via Mason: `ast_grep`, `bashls`, `html`, `lua_ls`, `phpactor`, `pyright`,
+`rust_analyzer`, `svelte`, `vtsls` (TypeScript / JavaScript).
 
-- NeoVim in version `0.9.0` is required!
-- **Nerd Fonts** are required for nice display of icons (currently Cousine Nerd Font is configured,
-  which is packed into this directory)
-- Because **telescope** is included in this configuration, `ripgrep` package is required.
-- `nodejs` seems still to be required (not sure, probably mason).
+## Shortcuts & Keybindings
 
-### Installation
+> `<leader>` = `Space`
 
-- Step 1: Install requirements mentioned above
-    - Install `ripgrep`, e.g.
-      ```sh
-      sudo apt install ripgrep
-      ```
-      ```sh
-      sudo pamac install ripgrep
-      ```
-- Step 2: Install some Nerd Font of your choice (this config uses Cousine Nerd Font)
-    - Cousine Nerd Font is available here: [Cousine Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Cousine.zip)
-    - Extract and copy to your local TTF folder, e.g.
-      ```sh
-      unzip Cousine.zip
-      sudo mv *.ttf /usr/share/fonts/TTF
-      ```
-      For using another Nerd Font, see [this section](#using-another-nerd-font).
-- Step 3: Remove existing configurations completely, to avoid conflicts:
-  ```sh
-  rm -rf ~/.config/nvim
-  rm -rf ~/.local/share/nvim
-  rm -rf ~/.local/state/nvim
-  ```
-- Step 4: Clone this repository and install VimPlug:
-  ```sh
-  git clone https://github.com/neutrinoks/nvim.git ~/.config/nvim
-  ```
-- Step 5: Restart to make all changes applied properly and wait until finished, restart again.
+### Global
 
-### Using another Nerd Font
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Ctrl+s` | Normal | Save file |
+| `Ctrl+q` | Normal | Quit |
+| `Ctrl+q` | Insert | Exit insert mode |
+| `Space dd` | Normal | Switch to dark scheme (Catppuccin Frappé) |
+| `Space ll` | Normal | Switch to light scheme (Catppuccin Latte) |
 
-If you want to use another Nerd Font, you have to specifiy it in `lua/global.lua` line 4, e.g.
-```lua
-opt.guifont = "Cousine Nerd Font"
+### Barbar – Tab Bar
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Alt+,` | Normal / Insert | Previous buffer |
+| `Alt+.` | Normal / Insert | Next buffer |
+| `Alt+<` | Normal | Move buffer left |
+| `Alt+>` | Normal | Move buffer right |
+| `Ctrl+w` | Normal | Close buffer |
+| `Alt+1` … `Alt+9` | Normal | Jump to buffer 1–9 |
+| `Alt+0` | Normal | Jump to last buffer |
+
+### Neo-tree – File Explorer
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Ctrl+m` | Normal | Open / reveal current file in explorer |
+| `Enter` / `o` | Normal (tree) | Open file or toggle folder |
+| `a` | Normal (tree) | Add file or directory |
+| `d` | Normal (tree) | Delete file or directory |
+| `r` | Normal (tree) | Rename |
+| `y` | Normal (tree) | Copy to clipboard |
+| `x` | Normal (tree) | Cut to clipboard |
+| `p` | Normal (tree) | Paste from clipboard |
+| `H` | Normal (tree) | Toggle hidden files |
+| `/` | Normal (tree) | Fuzzy search |
+| `q` | Normal (tree) | Close explorer |
+| `?` | Normal (tree) | Show help |
+
+### Telescope – Fuzzy Finder
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Space ff` | Normal | Find files |
+| `Space fg` | Normal | Live grep |
+| `Space fb` | Normal | List open buffers |
+| `Ctrl+n` / `Ctrl+j` | Picker | Next item |
+| `Ctrl+p` / `Ctrl+k` | Picker | Previous item |
+| `Enter` | Picker | Open selection |
+| `Ctrl+v` | Picker | Open in vertical split |
+| `Ctrl+x` | Picker | Open in horizontal split |
+| `Ctrl+t` | Picker | Open in new tab |
+| `Ctrl+q` | Picker | Send to quickfix list |
+| `Esc` | Picker | Close picker |
+
+### LSP
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `K` | Normal | Hover documentation |
+| `gd` | Normal | Go to definition |
+| `gi` | Normal | Go to implementation |
+| `Space ca` | Normal / Visual | Code actions |
+| `Space gf` | Normal | Format buffer |
+| `Space e` | Normal | Show line diagnostics |
+
+### Trouble – Diagnostics
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Space xx` | Normal | Toggle diagnostics panel |
+| `Space xr` | Normal | Show LSP references |
+
+### nvim-cmp – Completion
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Ctrl+Space` | Insert | Trigger completion |
+| `Enter` | Insert | Confirm selection |
+| `Ctrl+e` | Insert | Abort completion |
+| `Ctrl+n` / `Ctrl+p` | Insert | Navigate suggestions |
+| `Ctrl+b` / `Ctrl+f` | Insert | Scroll documentation |
+
+### Treesitter – Incremental Selection
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `gnn` | Normal | Start node selection |
+| `grn` | Visual | Expand to next node |
+| `grc` | Visual | Expand to scope |
+| `grm` | Visual | Shrink selection |
+
+### Gitsigns
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Space gd` | Normal | Preview hunk |
+
+### Git Conflict
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `co` | Normal | Choose ours |
+| `ct` | Normal | Choose theirs |
+| `cb` | Normal | Choose both |
+| `c0` | Normal | Choose none |
+| `]x` | Normal | Next conflict |
+| `[x` | Normal | Previous conflict |
+
+### Claude Code – AI Assistant
+
+| Shortcut | Mode | Description |
+|----------|------|-------------|
+| `Ctrl+,` | Normal / Terminal | Toggle Claude Code panel |
+| `Space cC` | Normal | Open with `--continue` (resume last conversation) |
+| `Space cV` | Normal | Open with `--verbose` |
+| `Ctrl+h/j/k/l` | Normal | Navigate between windows |
+| `Ctrl+f` / `Ctrl+b` | Terminal | Scroll in Claude panel |
+
+## Requirements
+
+- **NeoVim 0.11+** — required for the native LSP API (`vim.lsp.config` / `vim.lsp.enable`)
+- **Nerd Font** — required for icons (configured: Hack Nerd Font; see [below](#using-another-nerd-font))
+- **ripgrep** — required by Telescope for live grep
+
+## Installation
+
+This configuration is part of a [dotfiles](https://github.com/neutrinoks/dotfiles) repository
+managed with [GNU Stow](https://www.gnu.org/software/stow/).
+
+**1. Install requirements**
+
+```sh
+# Arch / Manjaro
+sudo pamac install neovim ripgrep
 ```
-or
+
+**2. Install a Nerd Font**
+
+Download [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip)
+and place the `.ttf` files in `~/.local/share/fonts/`, then run `fc-cache -fv`.
+
+**3. Clone the dotfiles repo and stow**
+
+```sh
+git clone https://github.com/neutrinoks/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+
+# Remove any existing NeoVim config to avoid stow conflicts
+rm -rf ~/.config/nvim
+
+stow nvim
+```
+
+**4. First launch**
+
+Open NeoVim — lazy.nvim will bootstrap itself and install all plugins automatically. Once
+finished, restart NeoVim. Mason will prompt to install the LSP servers on first use.
+
+## Using Another Nerd Font
+
+Change the font name in `lua/global.lua`:
+
 ```lua
-opt.guifont = "Hack Nerd Font"
+vim.opt.guifont = "Hack Nerd Font"
 ```

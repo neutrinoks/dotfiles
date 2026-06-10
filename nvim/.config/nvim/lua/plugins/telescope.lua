@@ -1,9 +1,20 @@
 return {
-    "nvim-telescope/telescope.nvim",
-    name = "telescope",
-    tag = "0.1.8",
-    requires = {
-        "nvim-lua/plenary.nvim"
+    {
+        "nvim-telescope/telescope.nvim",
+        name = "telescope",
+        tag = "0.1.8",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        },
+        config = function()
+            require("telescope").setup {
+                defaults = {
+                    preview = {
+                        treesitter = false,
+                    }
+                },
+            }
+        end
     },
     {
         "nvim-telescope/telescope-ui-select.nvim",

@@ -52,8 +52,6 @@ Installed and managed via Mason: `ast_grep`, `bashls`, `html`, `lua_ls`, `phpact
 | `Alt+<` | Normal | Move buffer left |
 | `Alt+>` | Normal | Move buffer right |
 | `Ctrl+w` | Normal | Close buffer |
-| `Alt+1` … `Alt+9` | Normal | Jump to buffer 1–9 |
-| `Alt+0` | Normal | Jump to last buffer |
 
 ### Neo-tree – File Explorer
 

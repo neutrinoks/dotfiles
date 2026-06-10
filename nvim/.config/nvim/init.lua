@@ -20,7 +20,23 @@
 -- General Editor Settings -------------------------------------------------------------------------
 
 require("global")
-require("config.lazy")
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
+
 require("lazy").setup("plugins")
 
 local methods = require("methods")
@@ -28,12 +44,9 @@ local opts = { noremap = true, silent = true }
 
 -- Global Shortcuts --------------------------------------------------------------------------------
 
--- Instant quit by Ctrl-q
 vim.keymap.set("n", "<C-q>", vim.cmd.q, opts)
 vim.keymap.set("i", "<C-q>", "<ESC>", opts)
--- Save file by: Ctrl-s
 vim.keymap.set("n", "<C-s>", vim.cmd.w, opts)
--- Changing the color scheme
 vim.keymap.set("n", "<leader>dd", methods.darkscheme, opts)
 vim.keymap.set("n", "<leader>ll", methods.brightscheme, opts)
 
@@ -44,7 +57,6 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, opts)
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, opts)
 vim.keymap.set("n", "<leader>fb", builtin.buffers, opts)
--- vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
 
 -- Neo-tree ----------------------------------------------------------------------------------------
 
@@ -57,7 +69,7 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, opts)
-vim.keymap.set("n", "<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 
 
 -- Barbar ------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ return {
         require("nvim-treesitter").setup({
             ensure_installed = {
                 "bash", "c", "cpp", "css", "dart", "html", "json", "lua", "php", "python", "rust",
-                "solidity", "typescript"
+                "solidity", "svelte", "typescript"
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)

@@ -14,8 +14,8 @@ return {
         hide_signcolumn = true, -- Hide the sign column in the terminal window
         -- Floating window configuration (only applies when position = "float")
         float = {
-          width = "50%",        -- Width: number of columns or percentage string
-          height = "50%",       -- Height: number of rows or percentage string
+          width = "75%",        -- Width: number of columns or percentage string
+          height = "75%",       -- Height: number of rows or percentage string
           row = "center",       -- Row position: number, "center", or percentage string
           col = "center",       -- Column position: number, "center", or percentage string
           relative = "editor",  -- Relative to: "editor" or "cursor"
@@ -63,6 +63,18 @@ return {
         window_navigation = true, -- Enable window navigation keymaps (<C-h/j/k/l>)
         scrolling = true,         -- Enable scrolling keymaps (<C-f/b>) for page up/down
       }
+    })
+
+    -- In dark mode, context lines in Claude Code diffs may use 24-bit grays that are
+    -- invisible on the dark base background. Apply a slightly lighter surface bg so
+    -- those grays are readable. ClaudeTermNormal is defined in catppuccin.lua.
+    vim.api.nvim_create_autocmd("TermOpen", {
+      pattern = "term://*claude*",
+      callback = function()
+        if vim.o.background == "dark" then
+          vim.wo.winhighlight = "Normal:ClaudeTermNormal,NormalNC:ClaudeTermNormal"
+        end
+      end,
     })
   end
 }

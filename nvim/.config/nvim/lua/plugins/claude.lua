@@ -65,9 +65,9 @@ return {
       }
     })
 
-    -- In dark mode, context lines in Claude Code diffs may use 24-bit grays that are
-    -- invisible on the dark base background. Apply a slightly lighter surface bg so
-    -- those grays are readable. ClaudeTermNormal is defined in catppuccin.lua.
+    -- ClaudeTermNormal is defined in catppuccin.lua. Primary fix for dark 24-bit colors is
+    -- COLORFGBG=15;0 (set there too), which tells Claude Code it is inside a dark terminal
+    -- so it renders light-on-dark text. The winhighlight is a secondary fallback.
     vim.api.nvim_create_autocmd("TermOpen", {
       pattern = "term://*claude*",
       callback = function()

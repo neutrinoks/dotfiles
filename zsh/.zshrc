@@ -34,3 +34,45 @@ nvm()  { _nvm_load; nvm "$@" }
 node() { _nvm_load; node "$@" }
 npm()  { _nvm_load; npm "$@" }
 npx()  { _nvm_load; npx "$@" }
+
+# Auto-switch to a project's .nvmrc on cd, without paying nvm.sh's
+# sourcing cost on every new shell: walk up from $PWD for .nvmrc first
+# (cheap, no nvm needed) and only trigger _nvm_load if one is actually
+# found. Mirrors nvm's own "automatically call nvm use" recipe.
+autoload -U add-zsh-hook
+
+_load_nvmrc() {
+  local dir="$PWD"
+  while [ "$dir" != "/" ] && [ ! -f "$dir/.nvmrc" ]; do
+    dir="$(dirname "$dir")"
+  done
+  [ -f "$dir/.nvmrc" ] || return
+
+  if ! typeset -f nvm_find_nvmrc >/dev/null 2>&1; then
+    _nvm_load
+  fi
+
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
+  [ -n "$nvmrc_path" ] || return
+
+  local nvmrc_node_version
+  nvmrc_node_version="$(nvm version "$(cat "$nvmrc_path")" 2>/dev/null)"
+
+  if [ "$nvmrc_node_version" = "N/A" ]; then
+    nvm install
+  elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd _load_nvmrc
+_load_nvmrc
+
+# Android SDK (adb, emulator, sdkmanager)
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
+
+# ~/bin muss vor ~/.local/bin stehen: /etc/profile.d/home-local-bin.sh laeuft nach
+# .zshenv und schiebt ~/.local/bin nach vorne, sonst greift der claude-Wrapper nicht.
+path=("$HOME/bin" ${path:#$HOME/bin})
+export PATH

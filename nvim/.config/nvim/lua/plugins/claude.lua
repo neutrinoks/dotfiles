@@ -65,15 +65,12 @@ return {
       }
     })
 
-    -- ClaudeTermNormal is defined in catppuccin.lua. Primary fix for dark 24-bit colors is
-    -- COLORFGBG=15;0 (set there too), which tells Claude Code it is inside a dark terminal
-    -- so it renders light-on-dark text. The winhighlight is a secondary fallback.
+    -- ClaudeTermNormal is defined per light/dark in catppuccin.lua; mapped unconditionally so a
+    -- later light/dark switch still recolors an already open Claude window.
     vim.api.nvim_create_autocmd("TermOpen", {
       pattern = "term://*claude*",
       callback = function()
-        if vim.o.background == "dark" then
-          vim.wo.winhighlight = "Normal:ClaudeTermNormal,NormalNC:ClaudeTermNormal"
-        end
+        vim.wo.winhighlight = "Normal:ClaudeTermNormal,NormalNC:ClaudeTermNormal"
       end,
     })
   end

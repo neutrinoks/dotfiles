@@ -11,7 +11,7 @@ inspired by typecraft's [video series](https://www.youtube.com/playlist?list=PLs
 | Status bar | `nvim-lualine/lualine.nvim` |
 | File explorer | `nvim-neo-tree/neo-tree.nvim` |
 | Color scheme | `catppuccin/nvim` |
-| Syntax / AST | `nvim-treesitter/nvim-treesitter` |
+| Syntax / AST | `nvim-treesitter/nvim-treesitter` (`main` branch) |
 | Completion & snippets | `hrsh7th/nvim-cmp`, `L3MON4D3/LuaSnip`, `rafamadriz/friendly-snippets` |
 | LSP | `neovim/nvim-lspconfig`, `williamboman/mason.nvim`, `williamboman/mason-lspconfig.nvim` |
 | Formatting & linting | `nvimtools/none-ls.nvim` |
@@ -114,15 +114,6 @@ Installed and managed via Mason: `ast_grep`, `bashls`, `html`, `lua_ls`, `phpact
 | `Ctrl+n` / `Ctrl+p` | Insert | Navigate suggestions |
 | `Ctrl+b` / `Ctrl+f` | Insert | Scroll documentation |
 
-### Treesitter – Incremental Selection
-
-| Shortcut | Mode | Description |
-|----------|------|-------------|
-| `gnn` | Normal | Start node selection |
-| `grn` | Visual | Expand to next node |
-| `grc` | Visual | Expand to scope |
-| `grm` | Visual | Shrink selection |
-
 ### Gitsigns
 
 | Shortcut | Mode | Description |
@@ -150,9 +141,33 @@ Installed and managed via Mason: `ast_grep`, `bashls`, `html`, `lua_ls`, `phpact
 | `Ctrl+h/j/k/l` | Normal | Navigate between windows |
 | `Ctrl+f` / `Ctrl+b` | Terminal | Scroll in Claude panel |
 
+## Theme & Claude Code Integration
+
+Catppuccin switches between **Frappé** (dark) and **Latte** (light), following the system setting via
+`auto-dark-mode.nvim` (or manually with `Space dd` / `Space ll`). On every color scheme change
+`lua/plugins/catppuccin.lua` also:
+
+- writes a matching Catppuccin theme for Claude Code to `~/.claude/themes/catppuccin.json`
+  (a running Claude Code session picks up the change live),
+- sets `"theme": "custom:catppuccin"` in `~/.claude/settings.json` if it isn't set already,
+- colors the Claude Code float (`ClaudeTermNormal`) and, in dark mode, sets the Catppuccin Frappé
+  ANSI palette for `:terminal`,
+- exports `COLORFGBG` / `TERM_BACKGROUND` so CLI tools started from NeoVim detect dark or light.
+
+## Treesitter Notes
+
+nvim-treesitter is pinned to its `main` branch (required for NeoVim 0.12). That branch no longer
+provides the old `highlight` / `incremental_selection` / `indent` modules, so there are no
+incremental selection keymaps anymore.
+
+`queries/lua/highlights.scm` overrides NeoVim 0.12's bundled Lua highlight query, whose
+`operator: _ @operator` pattern isn't supported by the installed Lua parser and errors on every
+Lua file open.
+
 ## Requirements
 
-- **NeoVim 0.11+** — required for the native LSP API (`vim.lsp.config` / `vim.lsp.enable`)
+- **NeoVim 0.12+** — required by the nvim-treesitter `main` branch and the native LSP API
+  (`vim.lsp.config` / `vim.lsp.enable`)
 - **Nerd Font** — required for icons (configured: Hack Nerd Font; see [below](#using-another-nerd-font))
 - **ripgrep** — required by Telescope for live grep
 

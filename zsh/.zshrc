@@ -18,10 +18,6 @@ alias ll="ls -l --color=auto"
 alias locrs="find . -name '*.rs' | xargs wc -l | tail -n1"
 gitupdate() { git reset --hard "$(git log -n 2 --pretty=format:'%H' | tail -1)" && git pull }
 
-if [ -z "$SSH_AGENT_PID" ] || ! kill -0 "$SSH_AGENT_PID" 2>/dev/null; then
-    eval "$(ssh-agent -s)" > /dev/null
-fi
-
 export NVM_DIR="$HOME/.nvm"
 
 _nvm_load() {
@@ -59,8 +55,9 @@ _load_nvmrc() {
   local nvmrc_node_version
   nvmrc_node_version="$(nvm version "$(cat "$nvmrc_path")" 2>/dev/null)"
 
+  # No automatic `nvm install`: entering an untrusted repo must not trigger downloads.
   if [ "$nvmrc_node_version" = "N/A" ]; then
-    nvm install
+    echo "nvm: version from $nvmrc_path not installed, run 'nvm install'" >&2
   elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
     nvm use
   fi
@@ -76,3 +73,10 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
 # .zshenv und schiebt ~/.local/bin nach vorne, sonst greift der claude-Wrapper nicht.
 path=("$HOME/bin" ${path:#$HOME/bin})
 export PATH
+
+# SSH keys are served by the 1Password SSH agent
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+ssh-add -l
+
+# Machine-specific settings that stay out of the public repo
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

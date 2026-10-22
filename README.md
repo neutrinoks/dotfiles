@@ -13,6 +13,8 @@ Personal Linux configuration files, managed with [GNU Stow](https://www.gnu.org/
 | Package | Description |
 |---------|-------------|
 | `nvim` | NeoVim — lazy.nvim, full LSP setup, Telescope, Claude Code AI — [details](nvim/.config/nvim/README.md) |
+| `macos` | macOS-only bits — `us(altgr-intl)` keyboard layout, modifier-key mapping — [details](macos/README.md) |
+| `wezterm` | WezTerm — macOS terminal with Linux/kitty-style keybindings (CTRL+SHIFT), left Option = Alt, right Option = AltGr |
 | `zsh` | Zsh shell — Manjaro zsh config with powerline prompt, aliases, lazy-loaded NVM with `.nvmrc` auto-switch, 1Password SSH agent, Android SDK in `PATH`, sources an untracked `~/.zshrc.local` for machine-specific settings |
 
 ### Archived
@@ -57,6 +59,9 @@ cd ~/dotfiles
 
 # Active setup
 stow nvim zsh
+
+# macOS only
+stow wezterm
 ```
 
 The archived packages additionally need Hyprland + UWSM and can be stowed individually,

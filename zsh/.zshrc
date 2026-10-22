@@ -1,3 +1,6 @@
+# Let gpg's pinentry know which terminal to prompt on
+export GPG_TTY=$(tty)
+
 # Use powerline
 USE_POWERLINE="true"
 # Has weird character width
@@ -11,6 +14,31 @@ fi
 # Use manjaro zsh prompt
 if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
+fi
+
+# Line-editing keys on macOS as manjaro-zsh-config binds them on Linux: the
+# terminal sends Home/End, Ctrl+arrows and the like as escape sequences that
+# zsh alone leaves unbound.
+if [[ "$OSTYPE" == darwin* ]]; then
+  bindkey -e
+  bindkey '^[[H' beginning-of-line
+  bindkey '^[[1~' beginning-of-line
+  bindkey '^[[F' end-of-line
+  bindkey '^[[4~' end-of-line
+  bindkey '^[[3~' delete-char
+  bindkey '^[[1;5D' backward-word
+  bindkey '^[[1;5C' forward-word
+  bindkey '^H' backward-kill-word
+  bindkey '^[[3;5~' kill-word
+  bindkey '^[[5~' history-beginning-search-backward
+  bindkey '^[[6~' history-beginning-search-forward
+  bindkey '^[[Z' undo
+fi
+
+# Starship prompt on macOS only -- Linux keeps the manjaro prompt sourced above.
+# Must come after it, otherwise the manjaro prompt would win.
+if [[ "$OSTYPE" == darwin* ]] && command -v starship >/dev/null; then
+  eval "$(starship init zsh)"
 fi
 
 alias la="ls -la --color=auto"
@@ -74,9 +102,12 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
 path=("$HOME/bin" ${path:#$HOME/bin})
 export PATH
 
-# SSH keys are served by the 1Password SSH agent
-export SSH_AUTH_SOCK=~/.1password/agent.sock
-ssh-add -l
+# SSH keys are served by the 1Password SSH agent (socket path differs per OS)
+if [[ "$OSTYPE" == darwin* ]]; then
+  export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+else
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+fi
 
 # Machine-specific settings that stay out of the public repo
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

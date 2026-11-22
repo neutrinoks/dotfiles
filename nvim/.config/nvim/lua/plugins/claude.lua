@@ -40,7 +40,9 @@ return {
         popd_cmd = 'popd',       -- Command to pop directory from stack (e.g., 'popd' for bash/zsh, 'exit' for nushell)
       },
       -- Command settings
-      command = "claude",        -- Command used to launch Claude Code
+      -- Command used to launch Claude Code. The NeoVim variant of the Catppuccin theme is tuned
+      -- for the float's background (ClaudeTermNormal); catppuccin-sync writes it.
+      command = [[claude --settings '{"theme":"custom:catppuccin-nvim"}']],
       -- Command variants
       command_variants = {
         -- Conversation management

@@ -13,6 +13,7 @@ Personal Linux configuration files, managed with [GNU Stow](https://www.gnu.org/
 | Package | Description |
 |---------|-------------|
 | `nvim` | NeoVim — lazy.nvim, full LSP setup, Telescope, Claude Code AI — [details](nvim/.config/nvim/README.md) |
+| `catppuccin` | Catppuccin Latte/Frappé for Claude Code (and GNOME Console), following the system's light/dark setting — [details](catppuccin/README.md) |
 | `macos` | macOS-only bits — `us(altgr-intl)` keyboard layout, modifier-key mapping — [details](macos/README.md) |
 | `wezterm` | WezTerm — macOS terminal with Linux/kitty-style keybindings (CTRL+SHIFT), left Option = Alt, right Option = AltGr |
 | `zsh` | Zsh shell — Manjaro zsh config with powerline prompt, aliases, lazy-loaded NVM with `.nvmrc` auto-switch, 1Password SSH agent, Android SDK in `PATH`, sources an untracked `~/.zshrc.local` for machine-specific settings |
@@ -40,10 +41,9 @@ NeoVim and the archived Hyprland components are styled with [Catppuccin](https:/
 - **Dark** — Frappé
 - **Light** — Latte
 
-NeoVim follows the system's dark/light setting and passes it on to
-[Claude Code](https://claude.com/claude-code): on every color scheme change it writes a matching
-Catppuccin theme to `~/.claude/themes/catppuccin.json` and selects it (`custom:catppuccin`) in
-`~/.claude/settings.json` — see the [NeoVim README](nvim/.config/nvim/README.md#theme--claude-code-integration).
+NeoVim and Claude Code both follow the system's dark/light setting. `catppuccin-sync` writes the
+matching Catppuccin theme for [Claude Code](https://claude.com/claude-code) on every switch, with a
+variant for the Claude Code float inside NeoVim — see the [catppuccin README](catppuccin/README.md).
 
 ## Installation
 
@@ -51,6 +51,7 @@ Catppuccin theme to `~/.claude/themes/catppuccin.json` and selects it (`custom:c
 
 - [GNU Stow](https://www.gnu.org/software/stow/), [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts)
 - `nvim`: NeoVim 0.12+, ripgrep — see the [NeoVim README](nvim/.config/nvim/README.md#requirements)
+- `catppuccin`: Python 3; on Linux a desktop with the XDG desktop portal (e.g. GNOME)
 - `zsh`: `manjaro-zsh-config`, [nvm](https://github.com/nvm-sh/nvm) (optional), 1Password with SSH agent enabled
 
 ```sh
@@ -58,7 +59,9 @@ git clone https://github.com/neutrinoks/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
 # Active setup
-stow nvim zsh
+mkdir -p ~/.local/bin
+stow nvim zsh catppuccin
+~/.local/bin/catppuccin-sync install   # theme service, see catppuccin/README.md
 
 # macOS only
 stow wezterm

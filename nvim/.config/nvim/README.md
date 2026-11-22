@@ -147,12 +147,16 @@ Catppuccin switches between **Frappé** (dark) and **Latte** (light), following 
 `auto-dark-mode.nvim` (or manually with `Space dd` / `Space ll`). On every color scheme change
 `lua/plugins/catppuccin.lua` also:
 
-- writes a matching Catppuccin theme for Claude Code to `~/.claude/themes/catppuccin.json`
-  (a running Claude Code session picks up the change live),
-- sets `"theme": "custom:catppuccin"` in `~/.claude/settings.json` if it isn't set already,
 - colors the Claude Code float (`ClaudeTermNormal`) and, in dark mode, sets the Catppuccin Frappé
   ANSI palette for `:terminal`,
 - exports `COLORFGBG` / `TERM_BACKGROUND` so CLI tools started from NeoVim detect dark or light.
+
+The Claude Code theme itself comes from `catppuccin-sync` (dotfiles package
+[`catppuccin`](../../../catppuccin/README.md)), which follows the system setting on its own, also
+while NeoVim isn't running. `lua/plugins/claude.lua` starts Claude Code with
+`--settings '{"theme":"custom:catppuccin-nvim"}'`, the variant tuned for the float's background.
+Its dark background `#3d4157` is set in two places: `ClaudeTermNormal` in `catppuccin.lua` and
+`NVIM_FLOAT_BG_DARK` in `catppuccin-sync`.
 
 ## Treesitter Notes
 

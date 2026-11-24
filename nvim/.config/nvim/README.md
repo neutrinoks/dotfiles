@@ -195,8 +195,8 @@ and place the `.ttf` files in `~/.local/share/fonts/`, then run `fc-cache -fv`.
 **3. Clone the dotfiles repo and stow**
 
 ```sh
-git clone https://github.com/neutrinoks/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+git clone https://github.com/neutrinoks/dotfiles.git
+cd dotfiles   # stow from the repo root, its .stowrc targets ~
 
 # Remove any existing NeoVim config to avoid stow conflicts
 rm -rf ~/.config/nvim

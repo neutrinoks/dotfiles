@@ -55,8 +55,8 @@ variant for the Claude Code float inside NeoVim — see the [catppuccin README](
 - `zsh`: `manjaro-zsh-config`, [nvm](https://github.com/nvm-sh/nvm) (optional), 1Password with SSH agent enabled
 
 ```sh
-git clone https://github.com/neutrinoks/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+git clone https://github.com/neutrinoks/dotfiles.git
+cd dotfiles
 
 # Active setup
 mkdir -p ~/.local/bin
@@ -69,5 +69,8 @@ stow wezterm
 
 The archived packages additionally need Hyprland + UWSM and can be stowed individually,
 e.g. `stow hypr waybar`.
+
+The checkout can live anywhere: the repo's `.stowrc` sets the target to `~`, so run `stow` from
+the repo root.
 
 > Remove or back up any existing config files first to avoid stow conflicts.

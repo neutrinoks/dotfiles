@@ -63,7 +63,7 @@ GNOME Console reads custom liveries from version 51.0 on. Version 50.0 fails to 
 
 ```sh
 mkdir -p ~/.local/bin   # an existing dir keeps stow from linking all of ~/.local into the repo
-cd ~/dotfiles
+cd path/to/dotfiles   # the repo root, its .stowrc targets ~
 stow catppuccin
 ~/.local/bin/catppuccin-sync install
 ```
